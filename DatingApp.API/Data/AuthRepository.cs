@@ -47,7 +47,7 @@ namespace DatingApp.API.Data
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
-            await _context.AddAsync(user);
+            await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
             return user;
 
@@ -57,8 +57,8 @@ namespace DatingApp.API.Data
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA512())
             {
-                passwordHash = hmac.Key;
-                passwordSalt = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             }
         }
 
